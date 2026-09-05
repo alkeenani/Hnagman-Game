@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css" />
+    <title>Hangman</title>
+  </head>
+  <body>
+    <div class="game-container">
+      <header>
+        <div class="heading">Hangman</div>
+        <div>Word Form : <span class="Categorie"></span></div>
+      </header>
+      <hr />
+      <div class="row">
+        <div class="Hangman-draw">
+          <div class="the-draw">
+            <div class="the-stand"></div>
+            <div class="the-hang"></div>
+            <div class="the-rowp"></div>
+            <div class="the-man">
+              <div class="the-head"></div>
+              <div class="the-body"></div>
+              <div class="the-hand"></div>
+              <div class="the-leg"></div>
+            </div>
+          </div>
+        </div>
+        <div class="latters"></div>
+      </div>
+      <hr />
+      <div class="input-feild"></div>
+      <hr />
+      <button class="newGame">New Game</button>
+    </div>
+
+    <audio src="./src/success.mp3" id="success" preload="auto"></audio>
+    <audio src="./src/fail.mp3" id="fail" preload="auto"></audio>
+    <audio src="./src/Game_Over.mp3" preload="auto" id="gameOver"></audio>
+    <audio src="./src/Victory_Sound.mp4" preload="auto" id="Win"></audio>
+    <script src="main.js"></script>
+  </body>
+</html>
