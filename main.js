@@ -1,15 +1,20 @@
 //? DOM Elements Selection
 const latters = document.querySelector(".latters");
 const CategorieSpan = document.querySelector(".Categorie");
-let WorngAttempts = 0;
+let wrongAttempts = 0;
 const thedraw = document.querySelector(".Hangman-draw");
 
-//? Generate Letter Buttons Using charCode
-for (let i = 65; i <= 90; i++) {
-  const letter = document.createElement("button");
-  letter.textContent = String.fromCharCode(i);
-  letter.classList.add(`letter-box`);
-  latters.appendChild(letter);
+//? Generate Letter Buttons (A - Z)
+function generateLetters() {
+  for (let i = 65; i <= 90; i++) {
+    const letter = document.createElement("button");
+
+    letter.textContent = String.fromCharCode(i);
+
+    letter.classList.add(`letter-box`);
+
+    latters.appendChild(letter);
+  }
 }
 
 //? Words Object With Categories
@@ -178,104 +183,257 @@ const words = {
     "DONALD DUCK",
     "SPONGEBOB",
   ],
+  jobs: [
+    "TEACHER",
+    "ENGINEER",
+    "DOCTOR",
+    "LAWYER",
+    "PILOT",
+    "CHEF",
+    "FARMER",
+    "DENTIST",
+    "NURSE",
+    "POLICE OFFICER",
+    "ARCHITECT",
+    "DESIGNER",
+    "PROGRAMMER",
+    "PHOTOGRAPHER",
+    "JOURNALIST",
+  ],
+
+  vehicles: [
+    "CAR",
+    "BUS",
+    "TRAIN",
+    "AIRPLANE",
+    "HELICOPTER",
+    "MOTORCYCLE",
+    "BICYCLE",
+    "TRUCK",
+    "SHIP",
+    "BOAT",
+    "SUBMARINE",
+    "TRACTOR",
+    "AMBULANCE",
+    "FIRE TRUCK",
+    "TAXI",
+  ],
+
+  nature: [
+    "MOUNTAIN",
+    "RIVER",
+    "OCEAN",
+    "FOREST",
+    "DESERT",
+    "WATERFALL",
+    "VOLCANO",
+    "ISLAND",
+    "VALLEY",
+    "CLOUD",
+    "RAINBOW",
+    "SUNSET",
+    "THUNDER",
+    "FLOWER",
+    "TREE",
+  ],
+
+  games: [
+    "MINECRAFT",
+    "FORTNITE",
+    "VALORANT",
+    "TETRIS",
+    "FIFA",
+    "PUBG",
+    "ROBLOX",
+    "OVERWATCH",
+    "PORTAL",
+    "HALO",
+    "DOOM",
+    "SKYRIM",
+    "GTA",
+    "PAC MAN",
+    "SONIC",
+  ],
+
+  space: [
+    "PLANET",
+    "GALAXY",
+    "STAR",
+    "MOON",
+    "SUN",
+    "ASTEROID",
+    "COMET",
+    "ROCKET",
+    "SATELLITE",
+    "ASTRONAUT",
+    "UNIVERSE",
+    "BLACK HOLE",
+    "SPACE SHIP",
+    "METEOR",
+    "NEBULA",
+  ],
 };
 
+let wordToGuess;
+
 //? Generate Random Word From Random Category
-let Categorie = Object.keys(words);
-let wordCategorie = Categorie[Math.floor(Math.random() * Categorie.length)];
-CategorieSpan.textContent = wordCategorie;
-let wordToGuess =
-  words[wordCategorie][
-    [Math.floor(Math.random() * words[wordCategorie].length)]
-  ];
+function generateRandomWord() {
+  let Categorie = Object.keys(words);
 
-//? Generate Input Field Spans For Each Letter
-const inputFeild = document.querySelector(".input-feild");
+  let wordCategorie = Categorie[Math.floor(Math.random() * Categorie.length)];
 
-for (let i = 0; i < wordToGuess.length; i++) {
-  let input = document.createElement("span");
-  if (wordToGuess[i] === " ") {
-    input.classList.add("with-space");
-  }
-  inputFeild.appendChild(input);
-  input.maxLength = 1;
+  CategorieSpan.textContent = wordCategorie;
+
+  wordToGuess =
+    words[wordCategorie][
+      Math.floor(Math.random() * words[wordCategorie].length)
+    ];
+
+  console.log(wordToGuess);
 }
 
-//? Click Event Listener For Letter Buttons
-const spans = document.querySelectorAll(".input-feild span");
+//? Generate Word Boxes
+function generateWordSpans() {
+  const inputFeild = document.querySelector(".input-feild");
+
+  inputFeild.innerHTML = "";
+
+  for (let i = 0; i < wordToGuess.length; i++) {
+    let input = document.createElement("span");
+
+    if (wordToGuess[i] === " ") {
+      input.classList.add("with-space");
+    }
+
+    inputFeild.appendChild(input);
+  }
+}
+
 //? New Game Button
 const newGamebtn = document.querySelector(".newGame");
+let theStatus = false;
 
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("letter-box")) {
-    let theStatus = false;
-    e.target.classList.add("checked");
+//? Check Letter On Click
+function checkLetter() {
+  document.addEventListener("click", (e) => {
+    const spans = document.querySelectorAll(".input-feild span");
 
-    const clickWord = e.target.textContent;
+    if (e.target.classList.contains("letter-box")) {
+      e.target.classList.add("checked");
 
-    //? Check If Letter Exists In The Word
-    Array.from(wordToGuess).forEach((wordRandom, wordIndex) => {
-      if (clickWord === wordRandom) {
-        spans[wordIndex].textContent = clickWord;
-        theStatus = true;
-      }
-    });
-    const isWin = Array.from(spans).every((span) => {
-      return span.classList.contains("with-space") || span.textContent !== "";
-    });
+      theStatus = false;
 
-    //? Handle Wrong Attempt
+      const clickWord = e.target.textContent;
 
-    if (theStatus !== true) {
-      WorngAttempts++;
-      thedraw.classList.add(`worng-${WorngAttempts}`);
-      document.getElementById("fail").currentTime = 0;
-      document.getElementById("fail").play();
-      if (WorngAttempts == 8) {
-        latters.classList.add("finished");
-        document.getElementById("gameOver").currentTime = 0;
-        document.getElementById("gameOver").play();
-        endGamepop(
-          "Game Over ",
-          "The Word Is",
-          wordToGuess[0] + wordToGuess.slice(1).toLowerCase(),
-        );
-        newGamebtn.style.display = "block";
+      //? Check If Letter Exists In The Word
+      Array.from(wordToGuess).forEach((wordRandom, wordIndex) => {
+        if (clickWord === wordRandom) {
+          spans[wordIndex].textContent = clickWord;
 
-        NewGame();
-      }
-    } else {
-      //? Handle Correct Attempt
-      document.getElementById("success").currentTime = 0;
-      document.getElementById("success").play();
+          theStatus = true;
+        }
+      });
+
+      //? Handle wrong attempts and check for game over
+      const gameOver = HandleWrong();
+
+      if (gameOver) return;
+
+      //? Handle Win
+      HandleWin();
     }
-    if (isWin) {
-      if (WorngAttempts === 0) {
-        endGamepop("GG! You won! 🔥 Your level is Legendary");
-      } else if (WorngAttempts <= 2) {
-        endGamepop("Congratulations! You won! 🏆 Your level is Master");
-      } else if (WorngAttempts <= 4) {
-        endGamepop("Well played! 👏 Your level is Expert");
-      } else if (WorngAttempts <= 6) {
-        endGamepop("Good job! 😎 Your level is Pro");
-      } else {
-        endGamepop("You won! 💪 Your level is Beginner");
-      }
-      document.getElementById("Win").currentTime = 0;
-      document.getElementById("Win").play();
-      newGamebtn.style.display = "block";
-      NewGame();
+  });
+}
+
+//? Handle Wrong And Correct Attempts
+function HandleWrong() {
+  if (theStatus !== true) {
+    wrongAttempts++;
+
+    thedraw.classList.add(`wrong-${wrongAttempts}`);
+
+    document.getElementById("fail").currentTime = 0;
+    document.getElementById("fail").play();
+
+    if (wrongAttempts === 8) {
+      latters.classList.add("finished");
+
+      document.getElementById("gameOver").currentTime = 0;
+      document.getElementById("gameOver").play();
+
+      endGamepop(
+        "Game Over ",
+        "The Word Is",
+        wordToGuess[0] + wordToGuess.slice(1).toLowerCase(),
+      );
+
+      newGamebtn.classList.add("show");
+
+      return true;
     }
+  } else {
+    //? Handle Correct Attempt
+    document.getElementById("success").currentTime = 0;
+    document.getElementById("success").play();
   }
+
+  return false;
+}
+
+//? Handle Win
+function HandleWin() {
+  const spans = document.querySelectorAll(".input-feild span");
+
+  const isWin = Array.from(spans).every((span) => {
+    return span.classList.contains("with-space") || span.textContent !== "";
+  });
+
+  if (isWin) {
+    latters.classList.add("finished");
+
+    if (wrongAttempts === 0) {
+      endGamepop("GG!", "You won! 🔥 Your level is Legendary", "");
+    } else if (wrongAttempts <= 2) {
+      endGamepop("Congratulations!", "You won! 🏆 Your level is Master", "");
+    } else if (wrongAttempts <= 4) {
+      endGamepop("Well played!", "👏 Your level is Expert", "");
+    } else if (wrongAttempts <= 6) {
+      endGamepop("Good job!", "😎 Your level is Pro", "");
+    } else {
+      endGamepop("You won!", "💪 Your level is Beginner", "");
+    }
+
+    document.getElementById("Win").currentTime = 0;
+    document.getElementById("Win").play();
+
+    newGamebtn.classList.add("show");
+  }
+}
+
+//? Start A New Game
+newGamebtn.addEventListener("click", () => {
+  latters.classList.remove("finished");
+
+  document.querySelectorAll(".latters .letter-box").forEach((el) => {
+    if (el.classList.contains("checked")) {
+      el.classList.remove("checked");
+    }
+  });
+
+  for (let i = 1; i <= 8; i++) {
+    thedraw.classList.remove(`wrong-${i}`);
+  }
+
+  wrongAttempts = 0;
+  theStatus = false;
+
+  generateRandomWord();
+
+  generateWordSpans();
+
+  newGamebtn.classList.remove("show");
 });
 
-if (WorngAttempts === 8) {
-}
-
-//? Funcatin New Game
-function NewGame() {
-  newGamebtn.addEventListener("click", () => window.location.reload());
-}
 //? End Game Popup Function
 function endGamepop(title, message, word) {
   const containerPopUp = document.createElement("div");
@@ -284,12 +442,14 @@ function endGamepop(title, message, word) {
   const overlay = document.createElement("div");
   const heading = document.createElement("h2");
   const description = document.createElement("p");
+
   containerPopUp.classList.add("containerPopUp");
   overlay.classList.add("overlay");
   heading.classList.add("heading");
   description.classList.add("description");
   closeBtn.classList.add("closeBtn");
   WordSpan.classList.add("targetWord");
+
   heading.textContent = title;
   description.textContent = message;
   WordSpan.textContent = word;
@@ -301,18 +461,15 @@ function endGamepop(title, message, word) {
 
   //? Animate Popup Open
   requestAnimationFrame(() => {
-    overlay.style.opacity = "1";
-    containerPopUp.style.opacity = "1";
-    containerPopUp.style.transform = "translate(-50%, -50%) scale(1)";
+    overlay.classList.add("is-visible");
+    containerPopUp.classList.add("is-open");
   });
 
   //? Close Popup Function
   function closePopup() {
-    overlay.style.opacity = "0";
-    containerPopUp.style.opacity = "0";
-    containerPopUp.style.transform = "translate(-50%, -50%) scale(.8)";
+    overlay.classList.remove("is-visible");
+    containerPopUp.classList.add("is-closed");
 
-    //? Remove Elements After Animation
     setTimeout(() => {
       overlay.remove();
       containerPopUp.remove();
@@ -323,3 +480,9 @@ function endGamepop(title, message, word) {
   closeBtn.addEventListener("click", closePopup);
   overlay.addEventListener("click", closePopup);
 }
+
+//? Initialize The Game
+generateLetters();
+generateRandomWord();
+generateWordSpans();
+checkLetter();
