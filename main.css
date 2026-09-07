@@ -4,6 +4,7 @@
 }
 * {
   box-sizing: border-box;
+  font-family: 'Fira Code', monospace;
 }
 .game-container {
   margin: 20px auto;
