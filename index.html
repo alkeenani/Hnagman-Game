@@ -3,12 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&display=swap" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
     <link rel="stylesheet" href="main.css" />
     <title>Hangman</title>
   </head>
   <body>
     <div class="game-container">
+      <div class="userProfile">
+        <div class="imge">
+          <img src="./img/avatar-05.webp" alt="" id="preview" />
+          <span class="uploadIcon"><i class="fa-solid fa-upload"></i></span>
+          <input type="file" id="imageInput" accept="image/*" />
+        </div>
+        <span class="RateWin">0</span>
+        <span class="RateLose">0</span>
+      </div>
+
       <header>
         <div class="heading">Hangman</div>
         <div>Word Form : <span class="Categorie"></span></div>

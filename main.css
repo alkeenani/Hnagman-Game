@@ -4,12 +4,83 @@
 }
 * {
   box-sizing: border-box;
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
 }
 .game-container {
+  position: relative;
   margin: 20px auto;
   width: 95%;
 }
+.userProfile {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 100;
+}
+.userProfile .imge {
+  position: relative;
+  overflow: hidden;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+.userProfile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.userProfile input {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+.userProfile .uploadIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: #c8d8d870;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  background-color: transparent;
+  border-radius: 50%;
+  opacity: 0;
+  transition: 0.3s;
+  pointer-events: none;
+  z-index: 1;
+}
+.userProfile:hover .uploadIcon {
+  background-color: #5c4c4c75;
+  opacity: 1;
+}
+.userProfile span {
+  position: absolute;
+  font-weight: bold;
+  top: 0;
+  font-size: 22px;
+}
+.userProfile .RateLose {
+  right: 100%;
+  color: red;
+}
+.userProfile .RateWin {
+  color: green;
+  left: 100%;
+}
+
 .game-container header {
   display: flex;
   align-items: center;
@@ -382,6 +453,26 @@
 
 /* Tablets */
 @media (max-width: 1024px) {
+  .userProfile {
+    left: 10px;
+    transform: none;
+    top: 10px;
+  }
+
+  .userProfile span {
+    position: static;
+    font-size: 20px;
+  }
+
+  .userProfile .RateWin {
+    left: auto;
+    margin-left: 6px;
+  }
+
+  .userProfile .RateLose {
+    right: auto;
+  }
+
   .game-container .row {
     flex-direction: column;
   }
@@ -395,6 +486,35 @@
 
 /* Large Phones & Small Tablets */
 @media (max-width: 767px) {
+  .userProfile {
+    position: static;
+    transform: none;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 15px;
+    gap: 12px;
+  }
+
+  .userProfile .imge {
+    width: 65px;
+    height: 65px;
+  }
+
+  .userProfile .uploadIcon {
+    font-size: 32px;
+    opacity: 0.85;
+    background-color: #5c4c4c75;
+  }
+
+  .userProfile input {
+    cursor: pointer;
+  }
+
+  .userProfile span {
+    position: static;
+    font-size: 20px;
+  }
+
   .game-container header {
     flex-direction: column;
     align-items: center;
@@ -444,6 +564,19 @@
 
 /* Small Phones */
 @media (max-width: 480px) {
+  .userProfile .imge {
+    width: 55px;
+    height: 55px;
+  }
+
+  .userProfile .uploadIcon {
+    font-size: 28px;
+  }
+
+  .userProfile span {
+    font-size: 18px;
+  }
+
   .game-container header .heading {
     font-size: 24px;
   }

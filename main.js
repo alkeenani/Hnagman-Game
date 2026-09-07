@@ -3,7 +3,43 @@ const latters = document.querySelector(".latters");
 const CategorieSpan = document.querySelector(".Categorie");
 let wrongAttempts = 0;
 const thedraw = document.querySelector(".Hangman-draw");
+const RateWin = document.querySelector(".RateWin");
+const RateLose = document.querySelector(".RateLose");
+let lose = 0;
+let win = 0;
+let winLocal = Number(localStorage.getItem("Rate Win")) || 0;
+let loseLocal = Number(localStorage.getItem("Rate Lose")) || 0;
+RateWin.textContent = winLocal;
+RateLose.textContent = loseLocal;
+const imageInput = document.querySelector("#imageInput");
+const preview = document.querySelector("#preview");
 
+document.querySelector(".imge").addEventListener("click", (e) => {
+  if (e.target === imageInput) return;
+  imageInput.click();
+});
+
+const savedImage = localStorage.getItem("Imge Profile");
+
+if (savedImage) {
+  preview.src = savedImage;
+}
+
+imageInput.addEventListener("change", () => {
+  const file = imageInput.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      preview.src = reader.result;
+
+      localStorage.setItem("Imge Profile", reader.result);
+    };
+
+    reader.readAsDataURL(file);
+  }
+});
 //? Generate Letter Buttons (A - Z)
 function generateLetters() {
   for (let i = 65; i <= 90; i++) {
@@ -357,7 +393,6 @@ function HandleWrong() {
 
     if (wrongAttempts === 8) {
       latters.classList.add("finished");
-
       document.getElementById("gameOver").currentTime = 0;
       document.getElementById("gameOver").play();
 
@@ -366,6 +401,11 @@ function HandleWrong() {
         "The Word Is",
         wordToGuess[0] + wordToGuess.slice(1).toLowerCase(),
       );
+      // console.log(lose);
+      loseLocal++;
+      localStorage.setItem("Rate Lose", loseLocal);
+
+      RateLose.textContent = loseLocal;
 
       newGamebtn.classList.add("show");
 
@@ -390,6 +430,10 @@ function HandleWin() {
 
   if (isWin) {
     latters.classList.add("finished");
+    winLocal++;
+    localStorage.setItem("Rate Win", winLocal);
+
+    RateWin.textContent = winLocal;
 
     if (wrongAttempts === 0) {
       endGamepop("GG!", "You won! 🔥 Your level is Legendary", "");
