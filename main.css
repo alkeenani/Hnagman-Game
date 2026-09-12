@@ -540,8 +540,75 @@
   }
 
   .Hangman-draw .the-draw {
-    transform: scale(0.7);
-    transform-origin: center top;
+    width: 140px;
+    height: 320px;
+    transform: none;
+  }
+
+  .Hangman-draw .the-draw .the-stand {
+    left: 32px;
+    top: 32px;
+    height: 287px;
+  }
+
+  .Hangman-draw .the-draw .the-hang {
+    left: 32px;
+    width: 63px;
+    top: 48px;
+  }
+
+  .Hangman-draw .the-draw .the-rowp {
+    left: 93px;
+    top: 48px;
+    height: 33px;
+  }
+
+  .Hangman-draw .the-draw .the-man {
+    top: 81px;
+    left: 70px;
+    width: 49px;
+    height: 49px;
+  }
+
+  .Hangman-draw .the-draw .the-head {
+    top: 4px;
+    left: 4px;
+    width: 35px;
+    height: 35px;
+  }
+
+  .Hangman-draw .the-draw .the-body {
+    top: 44px;
+    left: 23px;
+    height: 84px;
+  }
+
+  .Hangman-draw .the-draw .the-hand::before,
+  .Hangman-draw .the-draw .the-hand::after {
+    top: 56px;
+    height: 39px;
+  }
+
+  .Hangman-draw .the-draw .the-hand::before {
+    left: 39px;
+  }
+
+  .Hangman-draw .the-draw .the-hand::after {
+    left: 8px;
+  }
+
+  .Hangman-draw .the-draw .the-leg::before,
+  .Hangman-draw .the-draw .the-leg::after {
+    top: 120px;
+    height: 39px;
+  }
+
+  .Hangman-draw .the-draw .the-leg::before {
+    left: 8px;
+  }
+
+  .Hangman-draw .the-draw .the-leg::after {
+    left: 39px;
   }
 
   .latters button {
@@ -587,6 +654,77 @@
 
   .game-container .row .Hangman-draw {
     height: 280px;
+  }
+
+  .Hangman-draw .the-draw {
+    width: 122px;
+    height: 280px;
+  }
+
+  .Hangman-draw .the-draw .the-stand {
+    left: 28px;
+    top: 28px;
+    height: 251px;
+  }
+
+  .Hangman-draw .the-draw .the-hang {
+    left: 28px;
+    width: 55px;
+    top: 42px;
+  }
+
+  .Hangman-draw .the-draw .the-rowp {
+    left: 81px;
+    top: 42px;
+    height: 29px;
+  }
+
+  .Hangman-draw .the-draw .the-man {
+    top: 71px;
+    left: 61px;
+    width: 43px;
+    height: 43px;
+  }
+
+  .Hangman-draw .the-draw .the-head {
+    top: 4px;
+    left: 4px;
+    width: 31px;
+    height: 31px;
+  }
+
+  .Hangman-draw .the-draw .the-body {
+    top: 38px;
+    left: 20px;
+    height: 74px;
+  }
+
+  .Hangman-draw .the-draw .the-hand::before,
+  .Hangman-draw .the-draw .the-hand::after {
+    top: 49px;
+    height: 34px;
+  }
+
+  .Hangman-draw .the-draw .the-hand::before {
+    left: 34px;
+  }
+
+  .Hangman-draw .the-draw .the-hand::after {
+    left: 7px;
+  }
+
+  .Hangman-draw .the-draw .the-leg::before,
+  .Hangman-draw .the-draw .the-leg::after {
+    top: 105px;
+    height: 34px;
+  }
+
+  .Hangman-draw .the-draw .the-leg::before {
+    left: 7px;
+  }
+
+  .Hangman-draw .the-draw .the-leg::after {
+    left: 34px;
   }
 
   .game-container .row .latters {
